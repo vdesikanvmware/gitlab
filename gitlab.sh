@@ -35,6 +35,15 @@ sudo cp /home/kubo/certs/ca.crt /home/kubo/certs/ca.key  $GITLAB_HOME/config/ssl
 # fatal: unable to access 'https://gitlab.tanzu.io:445/root/tanzu-build-samples.git/': gnutls_handshake() failed: Key usage violation in certificate has been detected.
 mkdir -p $GITLAB_HOME/sslcert
 pushd $GITLAB_HOME/sslcert/
+cat > v3.ext << EOF
+[ v3_req ]
+subjectAltName = @alt_names
+subjectKeyIdentifier = hash
+
+[alt_names] 
+DNS.1   = gitlab.tanzu.io
+EOF
+
 openssl genrsa -out server.key 4096
 openssl req -new -key server.key -subj "/CN=gitlab.tanzu.io" -text -out server.csr
 openssl x509 -req -in server.csr -extfile v3.ext -text -days 365 -CA /home/kubo/certs/ca.crt -CAkey /home/kubo/certs/ca.key -CAcreateserial -out server.crt
