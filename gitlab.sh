@@ -37,6 +37,9 @@ mkdir -p $GITLAB_HOME/sslcert
 pushd $GITLAB_HOME/sslcert/
 cat > v3.ext << EOF
 [ v3_req ]
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName = @alt_names
 subjectKeyIdentifier = hash
 
