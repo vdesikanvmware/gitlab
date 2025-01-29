@@ -54,8 +54,8 @@ popd
 sudo cat <<EOT | sudo tee -a $GITLAB_HOME/config/gitlab.rb
 external_url "https://gitlab.tanzu.io"
 nginx['redirect_http_to_https'] = true
-nginx['ssl_certificate'] = "/etc/gitlab/ssl/ca.crt"
-nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/ca.key" 
+nginx['ssl_certificate'] = "/etc/gitlab/ssl/server.crt"
+nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/server.key" 
 letsencrypt['enable'] = false
 EOT
 
